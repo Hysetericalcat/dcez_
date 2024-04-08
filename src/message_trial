@@ -1,0 +1,137 @@
+import React, { useState, useEffect } from 'react';
+import { Offcanvas, Toast } from 'react-bootstrap';
+import io from "socket.io-client";
+
+const socket = io.connect("http://localhost:3002", {
+  withCredentials: true,
+  extraHeaders: {
+    "Access-Control-Allow-Origin": "http://localhost:3000 http://localhost:57886"
+  }
+});
+
+const Message_case = () => {
+  const [input, setInput] = useState('');
+  const [showOffcanvas, setShowOffcanvas] = useState(false);
+  const [messenger, setMessenger] = useState([]);
+  const [toastMessages, setToastMessages] = useState([]);
+
+  const handleChange = (e) => {
+    setInput(e.target.value);
+  };
+
+  const handleCloseOffcanvas = () => {
+    setShowOffcanvas(false);
+  };
+
+  const handleClick = () => {
+    socket.emit("message_sent_to_server", input);
+  };
+
+  useEffect(() => {
+    socket.on("message_collection", (message) => {  
+      setToastMessages(message);
+    });
+  }, []);
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <div className="sidebar">
+        {/* Render Toast components inside the sidebar */}
+        {toastMessages.map((message, index) => (
+          <Toast key={index} show={true} onClose={() => setToastMessages(prev => prev.filter((_, i) => i !== index))}>
+            <Toast.Header>
+              <img src="..." className="rounded me-2" alt="..." />
+              <strong className="me-auto">Bootstrap</strong>
+              <small className="text-body-secondary">11 mins ago</small>
+            </Toast.Header>
+            <Toast.Body>{message}</Toast.Body>
+          </Toast>
+        ))}
+      </div>
+
+      <button className="btn btn-primary" type="button" onClick={() => setShowOffcanvas(true)} style={{ position: 'absolute', top: 0, right: 0 }}>Message</button>
+      <Offcanvas placement="end" show={showOffcanvas} onHide={handleCloseOffcanvas} backdrop={false} id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title id="offcanvasScrollingLabel">Welcome to the chat!</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <input
+            type="text"
+            placeholder="Type your message..."
+            value={input}
+            onChange={handleChange}
+          />
+          <button onClick={handleClick}>Send</button>
+        </Offcanvas.Body>
+      </Offcanvas>
+    </div>
+  );
+};
+
+export default Message_case;
+import React, { useState,useEffect} from 'react';
+import io from "socket.io-client"
+import axios from 'axios';
+import Create_room from "./create_room"
+import data_recieve from './data.js'
+import Join_room from './join_room_1.js'
+import Message_Box from "./message.js"
+import Message_rev from "./message_recived"
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "./App.css"
+
+const socket = io.connect("http://localhost:3002",{
+  withCredentials: true,
+  extraHeaders: {
+    "Access-Control-Allow-Origin": "http://localhost:3000 http://localhost:57886"
+  }
+});
+
+
+const Disposable_Forms=()=>{
+  const[press,setpress]=useState(false)
+  const [press_1,setpress_1]=useState(false)
+
+if(press || press_1){
+  if(press){
+    return(
+      <div>
+       <Create_room/> 
+      </div>
+    )
+  }
+  if(press_1){
+   return(
+    <div>
+      <Join_room />
+    </div>
+   )
+  }}
+
+const Handleclick=()=>{
+  setpress(true)
+}
+const Handleclick_1=()=>{
+    setpress_1(true)
+}
+
+  return(
+    <div class="custom-background">
+        <div class="position-absolute top-50 start-50 translate-middle-x">
+        <div>
+        
+        <button onClick={Handleclick} class=" w-100 p-3 h-50 btn btn-outline-primary">Create Room</button>
+        </div>
+        <br></br>
+        <div class="position-relative bottom-50 start-50 translate-middle-x">
+  
+        <button onClick={Handleclick_1} class=" w-100 p-3 h-50 btn btn-outline-primary">Join Room</button>
+        </div>
+        </div>
+       
+     
+    </div>
+   
+  )
+}
+export default Disposable_Forms

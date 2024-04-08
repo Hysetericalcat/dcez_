@@ -1,0 +1,83 @@
+/* Custom CSS */
+.custom-btn {
+  padding: 20px 20px; /* Adjust padding to increase/decrease button size */
+  font-size: 15px; /* Adjust font size */
+}
+.custom-btn2 {
+  padding: 30px 20px; /* Adjust padding to increase/decrease button size */
+  font-size: 15px; /* Adjust font size */
+}
+
+
+.custom-background {
+  background-color: blue;
+  padding: 60px; /* Adjust the padding value as needed */
+}
+
+
+  .custom-scrollbar {
+    overflow-y: auto;
+  }
+
+  .col_col  {
+    background-color: peru;
+    height: 1000px; /* corrected misspelling of 'height' */
+    width:1000px;
+    opacity: 0.5;
+    position: relative; /* added semicolon at the end */
+    left: 1000px; /* corrected 'start' to 'left' */
+    top: 1000px
+}
+.pos {
+  position: absolute;
+  top: 60%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+}
+
+.pos2 {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.pos3 {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.button {
+  width: 200px;
+  height: 60px;
+  padding: 10px 20px; /* Add padding inside the button */
+  font-size: 20px; /* Set the font size */
+}
+
+.pos4 {
+  position: absolute;
+  left: 10%;
+  transform: translate(-10%);
+}
+
+.pos5 {
+  position: absolute;
+  top:30%;
+ 
+  transform: translate(-50%, -50%);
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: black; /* Set background color to black */
+}
+
+
+.custom-container {
+  width:  1800px; /* Set the desired width */
+  height: 200px; /* Set the desired height */
+}
